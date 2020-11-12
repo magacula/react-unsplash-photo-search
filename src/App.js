@@ -3,8 +3,8 @@ import { FaSearch } from "react-icons/fa";
 import Photo from "./Photo";
 
 // clientID URL that grants permission to access the Unsplash API
-// Passes Access Key using a client_id query parameter
-// Access key is found in .env file as an environment variable
+// passes Access Key using a client_id query parameter
+// Access key is found in .env file set to an environment variable: REACT_APP_ACCESS_KEY
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`;
 
 // the url path to get list of default photos
@@ -27,6 +27,9 @@ function App() {
       const response = await fetch(url);
       const data = await response.json();
       console.log(data);
+
+      setPhotos(data);
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -37,7 +40,33 @@ function App() {
     fetchImages();
   }, []);
 
-  return <h2>stock photos starter</h2>;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("hello world");
+  };
+
+  return (
+    <main>
+      <section className="search">
+        <form className="search-form" action="">
+          <input type="text" placeholder="search" className="form-input" />
+          <button type="submit" className="submit-btn" onClick={handleSubmit}>
+            <FaSearch />
+          </button>
+        </form>
+      </section>
+      <section className="photos">
+        <div className="photos-container">
+          {photos.map((image, index) => {
+            // uses spread operator to pass all props of the image property
+            return <Photo key={index} {...image} u />;
+          })}
+        </div>
+        {/* uses conditional rendering to render our loading state value */}
+        {loading && <h2 className="loading">Loading Images...</h2>}
+      </section>
+    </main>
+  );
 }
 
 export default App;
