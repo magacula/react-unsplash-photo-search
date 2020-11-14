@@ -17,17 +17,27 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [page, setPage] = useState(1);
+  const [query, setQuery] = useState("");
 
   // async function to fetch data from API
   const fetchImages = async () => {
     setLoading(true);
     let url; // initialize w/ let b/c url will change between default images & searched images
-    // Uses state to access page number of url
+    // A variable used to hold the state value that accesses the page number
     // page: the page number to retrieve  (a parameter)
     const urlPage = `&page=${page}`;
 
-    url = `${mainUrl}${clientID}${urlPage}`;
-    console.log(url);
+    // A variable used to hold the state value of the search query we want to view
+    const urlQuery = `&query=${query}`;
+
+    // if the user makes a search (when the query state value is not empty)
+    if (query) {
+      url = `${searchUrl}${clientID}${urlQuery}`;
+      // console.log(url);
+    } else {
+      url = `${mainUrl}${clientID}${urlPage}`;
+      // console.log(url);
+    }
 
     try {
       const response = await fetch(url); // invokes a fetch request to retrieve photos from url
@@ -36,8 +46,16 @@ function App() {
 
       // Updates images by copying over old state values, every time we scroll to a new page
       setPhotos((oldImages) => {
-        return [...oldImages, ...data];
+        // if we are searching and are on the first page, then return our new searched images
+        if (query && page === 1) {
+          return data.results;
+        } else if (query) {
+          return [...oldImages, ...data.results];
+        } else {
+          return [...oldImages, ...data]; // if not searching, return default images
+        }
       });
+
       // sets to not loading
       setLoading(false);
     } catch (error) {
@@ -74,14 +92,20 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hello world");
+    setPage(1); // resets page value to 1 every time we make a search
   };
 
   return (
     <main>
       <section className="search">
         <form className="search-form" action="">
-          <input type="text" placeholder="search" className="form-input" />
+          <input
+            type="text"
+            placeholder="search"
+            className="form-input"
+            value={query} // sets searched image as the state value
+            onChange={(e) => setQuery(e.target.value)}
+          />
           <button type="submit" className="submit-btn" onClick={handleSubmit}>
             <FaSearch />
           </button>
