@@ -85,23 +85,26 @@ p {
 
 .search {
   padding: 5rem 0 0 0;
-  width: 50vw;
+  width: 90vw;
   max-width: 1170px;
   margin: 0 auto;
 }
+
 .search-form {
   display: flex;
 }
+
 .form-input {
   width: 100%;
 }
+
 .form-input,
 .submit-btn {
   padding: 0.75rem 1.25rem;
   border: none;
   text-transform: capitalize;
   letter-spacing: 0.1rem;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   background: transparent;
   color: hsl(210, 22%, 49%);
   border-bottom: 3px solid hsl(210, 22%, 49%);
@@ -114,9 +117,11 @@ p {
 .form-input::placeholder {
   color: hsl(210, 22%, 49%);
 }
+
 .photos {
   padding: 5rem 0;
 }
+
 .photos-container {
   width: 90vw;
   max-width: 1170px;
@@ -124,28 +129,34 @@ p {
   display: grid;
   gap: 2rem;
 }
+
 .photo {
   height: 17.5rem;
   position: relative;
   overflow: hidden;
 }
+
 .photo > img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
 }
+
 .photo h4 {
   margin-bottom: 0.5rem;
 }
+
 .photo p {
   margin-bottom: 0;
 }
+
 .user-img {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
 }
+
 .photo-info {
   position: absolute;
   width: 100%;
@@ -160,9 +171,11 @@ p {
   justify-content: space-between;
   align-items: center;
 }
+
 .photo:hover .photo-info {
   transform: translateY(0);
 }
+
 @media screen and (min-width: 576px) {
   .photos-container {
     grid-template-columns: repeat(auto-fill, minmax(368px, 1fr));
