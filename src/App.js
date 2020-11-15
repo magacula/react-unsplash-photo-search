@@ -16,7 +16,7 @@ function App() {
   // set up state hooks
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [query, setQuery] = useState("");
 
   // async function to fetch data from API
@@ -32,7 +32,7 @@ function App() {
 
     // if the user makes a search (when the query state value is not empty)
     if (query) {
-      url = `${searchUrl}${clientID}${urlQuery}`;
+      url = `${searchUrl}${clientID}${urlPage}${urlQuery}`;
       // console.log(url);
     } else {
       url = `${mainUrl}${clientID}${urlPage}`;
@@ -93,6 +93,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setPage(1); // resets page value to 1 every time we make a search
+    fetchImages();
   };
 
   return (
@@ -116,7 +117,7 @@ function App() {
           {photos.map((image, index) => {
             // console.log(image);
             // uses spread operator to pass all props of the image property
-            return <Photo key={index} {...image} u />;
+            return <Photo key={index} {...image} />;
           })}
         </div>
         {/* uses conditional rendering to render our loading state value */}
