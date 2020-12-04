@@ -1,2 +1,2 @@
 # Photo Search Web App 
-using the Unsplash API with React
+Built with React using the Unsplash API
